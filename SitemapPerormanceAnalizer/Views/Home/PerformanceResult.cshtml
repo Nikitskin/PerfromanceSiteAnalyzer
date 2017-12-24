@@ -1,0 +1,48 @@
+﻿@model object
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model SitemapPerormanceAnalyzer.Models.IndexViewModel
+}
+
+<h2>PerformanceResult</h2>
+@Html.ActionLink("Back to search page", "Index", "Home");
+<br />
+@if (ViewBag.SitemapPerformanceResults != null)
+{
+    <table>
+        <tr>
+            <td>URL</td>
+            <td>Miliseconds</td>
+        </tr>
+        @foreach (var dictEntity in ViewBag.SitemapPerformanceResults)
+        {
+            <tr>
+                <td>@dictEntity.Value</td>
+            </tr>
+        }
+    </table>
+    <br />
+}
+
+<br />
+
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       class="btn btn-default btn">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Previous
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-default btn">
+        Next
+        lt;i class="glyphicon glyphicon-chevron-right">
+    </a>
+}

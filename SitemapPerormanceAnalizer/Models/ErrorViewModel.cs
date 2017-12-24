@@ -1,6 +1,4 @@
-using System;
-
-namespace SitemapPerormanceAnalizer.Models
+namespace SitemapPerormanceAnalyzer.Models
 {
     public class ErrorViewModel
     {
