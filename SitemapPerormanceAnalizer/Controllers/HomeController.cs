@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using BusinessLayer.Analyzer;
 using BusinessLayer.Interfaces;
 using DataLayer;
 using Microsoft.AspNetCore.Mvc;
 using SitemapPerormanceAnalyzer.Models;
+using System.Threading.Tasks;
 
 namespace SitemapPerormanceAnalyzer.Controllers
 {
@@ -13,14 +13,12 @@ namespace SitemapPerormanceAnalyzer.Controllers
     {
         private IAnalyzer _analyzer;
         private IPerformanceDiagostics _performanceDiagostics;
-        private IStore _store;
 
         public HomeController()
         {
             //todo create IOC 
             _analyzer = new UrlSiteMapParser();
             _performanceDiagostics = new PerformanceDiagnostics();
-            _store = new Store();
         }
 
         public IActionResult Index()
@@ -28,27 +26,20 @@ namespace SitemapPerormanceAnalyzer.Controllers
             return View();
         }
 
-        public RedirectToActionResult Index(RequestModel model)
+        public async Task<IActionResult> PerformanceResult(RequestModel model, int page = 1)
         {
+            var amount = 10;
             var listOfUrls = _analyzer.ReturnSiteMap(model.UrlToGetSitemap);
             ViewBag.ListOfUrls = listOfUrls;
-            return RedirectToAction("PerformanceResult","Home", new { _listOfUrls = listOfUrls });
-        }
-
-        public IActionResult PerformanceResult(int page = 1)
-        {
-
-            var count = await source.CountAsync();
-            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-            var result = await _performanceDiagostics.AsyncGetUrlsToCallBackTime();
-
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            IndexViewModel viewModel = new IndexViewModel
+            PageViewModel pageViewModel = new PageViewModel(listOfUrls.Count, page, amount);
+            var result = await _performanceDiagostics.AsyncGetPerformanceModelInRange((page-1)*amount, amount);
+            var viewModel = new IndexViewModel
             {
                 PageViewModel = pageViewModel,
-                Users = items
+                PerformanceModels = result
             };
-            return View();
+            ViewBag.SitemapPerformanceResults = result;
+            return View(viewModel);
         }
 
         public IActionResult Error()

@@ -1,14 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DataLayer.Models;
 
 namespace DataLayer
 {
     //todo please move this to some DB 
-    public class Store : IStore
+    public static class Store
     {
-        private IEnumerable<PerformanceResultDataModel> _performanceResultDataModels;
+        //todo remove static when it will be DI
+        private static List<PerformanceResultDataModel> _performanceResultDataModels;
 
-        public IEnumerable<PerformanceResultDataModel> PerformanceResultDataModels => _performanceResultDataModels ?? new List<PerformanceResultDataModel>();
+        public static List<PerformanceResultDataModel> PerformanceResultDataModels
+        {
+            get
+            {
+                if (_performanceResultDataModels == null)
+                {
+                    _performanceResultDataModels = new List<PerformanceResultDataModel>();
+                }
+                return _performanceResultDataModels;
+            }
+            private set { }
+        }
+    
     }
 }

@@ -5,6 +5,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Models;
+using DataLayer;
+using AutoMapper;
+using DataLayer.Models;
 
 namespace BusinessLayer.Analyzer
 {
@@ -17,15 +20,18 @@ namespace BusinessLayer.Analyzer
             _timeoutValue = timeoutValue;
         }
 
-        public async Task<IEnumerable<PerformanceModel>> AsyncGetUrlsToCallBackTime(IEnumerable<string> urls)
+        public async Task<IEnumerable<PerformanceModel>> AsyncGetPerformanceModelInRange(int from, int howMany)
         {
-            var resultingDictionary = new List<PerformanceModel>();
-            foreach (var url in urls)
+            var list = new List<PerformanceModel>();
+            for (int i = from; i < howMany; i++)
             {
-                var result = await GetCallBackTime(url);
-                resultingDictionary.Add(new PerformanceModel { Url = url, ResponseTime = result });
+                //todo DI
+                var url = Store.PerformanceResultDataModels.ToArray()[i];
+                var resultTime = await GetCallBackTime(url.Url);
+                url.ResponseTime = resultTime;
+                list.Add(Mapper.Map<PerformanceResultDataModel, PerformanceModel>(url));
             }
-            return resultingDictionary;
+            return list;
         }
 
         //todo can be refactored with the model using

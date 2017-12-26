@@ -1,6 +1,4 @@
-﻿@model object
-
-@{
+﻿@{
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_Layout.cshtml";
     @model SitemapPerormanceAnalyzer.Models.IndexViewModel
@@ -11,15 +9,18 @@
 <br />
 @if (ViewBag.SitemapPerformanceResults != null)
 {
+    <p>Total amount of sitemap elements =  @ViewBag.ListOfUrls.Count</p>
+    <br/>
     <table>
         <tr>
             <td>URL</td>
             <td>Miliseconds</td>
         </tr>
-        @foreach (var dictEntity in ViewBag.SitemapPerformanceResults)
+        @foreach (var performanceResult in ViewBag.SitemapPerformanceResults)
         {
             <tr>
-                <td>@dictEntity.Value</td>
+                <td>@performanceResult.Url</td>
+                <td>@performanceResult.ResponseTime</td>
             </tr>
         }
     </table>
@@ -43,6 +44,6 @@
        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
        class="btn btn-default btn">
         Next
-        lt;i class="glyphicon glyphicon-chevron-right">
+        <i class="glyphicon glyphicon-chevron-right"></i>
     </a>
 }

@@ -6,7 +6,7 @@ namespace SitemapPerormanceAnalyzer.Models
 {
     public class IndexViewModel
     {
-        public IEnumerable<PerformanceModel> Users { get; set; }
+        public IEnumerable<PerformanceModel> PerformanceModels { get; set; }
         public PageViewModel PageViewModel { get; set; }
     }
 }

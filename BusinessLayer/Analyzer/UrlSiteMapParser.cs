@@ -2,6 +2,10 @@
 using System.Xml;
 using System.Xml.XPath;
 using BusinessLayer.Interfaces;
+using DataLayer;
+using System.Linq;
+using DataLayer.Models;
+using System;
 
 namespace BusinessLayer.Analyzer
 {
@@ -12,6 +16,7 @@ namespace BusinessLayer.Analyzer
         public List<string> ReturnSiteMap(string url)
         {
             List<string> urls = new List<string>();
+            var result = Store.PerformanceResultDataModels;
             if (!string.IsNullOrEmpty(url))
             {
 
@@ -28,6 +33,12 @@ namespace BusinessLayer.Analyzer
                     foreach (XPathNavigator node in iterator)
                     {
                         urls.Add(node.Value);
+                        //todo add DI
+                        result.Add(new PerformanceResultDataModel
+                        {
+                            Url = node.Value,
+                            ResponseTime = TimeSpan.Zero
+                        });
                     }
                 }
             }
