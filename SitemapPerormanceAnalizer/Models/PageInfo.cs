@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using BusinessLayer.Models;
 
 namespace SitemapPerormanceAnalyzer.Models
 {
@@ -8,9 +6,11 @@ namespace SitemapPerormanceAnalyzer.Models
     {
         public int PageNumber { get; }
         public int TotalPages { get; }
+        public int PageSize { get; }
 
         public PageViewModel(int count, int pageNumber, int pageSize)
         {
+            PageSize = pageSize;
             PageNumber = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
         }

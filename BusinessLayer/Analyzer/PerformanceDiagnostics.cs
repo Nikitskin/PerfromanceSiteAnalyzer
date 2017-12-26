@@ -20,10 +20,15 @@ namespace BusinessLayer.Analyzer
             _timeoutValue = timeoutValue;
         }
 
+        public int GetTotalAmountOfSitemaps()
+        {
+            return Store.PerformanceResultDataModels.Count; 
+        }
+
         public async Task<IEnumerable<PerformanceModel>> AsyncGetPerformanceModelInRange(int from, int howMany)
         {
             var list = new List<PerformanceModel>();
-            for (int i = from; i < howMany; i++)
+            for (int i = from; i < from + howMany; i++)
             {
                 //todo DI
                 var url = Store.PerformanceResultDataModels.ToArray()[i];

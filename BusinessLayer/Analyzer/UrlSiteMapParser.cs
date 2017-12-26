@@ -16,6 +16,8 @@ namespace BusinessLayer.Analyzer
         public List<string> ReturnSiteMap(string url)
         {
             List<string> urls = new List<string>();
+            //todo KISS not implemented
+            Store.PerformanceResultDataModels.Clear();
             var result = Store.PerformanceResultDataModels;
             if (!string.IsNullOrEmpty(url))
             {

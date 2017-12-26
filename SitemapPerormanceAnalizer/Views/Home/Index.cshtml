@@ -7,7 +7,7 @@
 }
 <h2>Index</h2>
 <body>
-    @using (Html.BeginForm("PerformanceResult", "Home", FormMethod.Post))
+    @using (Html.BeginForm("RedirectToPerformanceResult", "Home", FormMethod.Post))
     {
         <div>Input url value to find sitemap</div>
         @Html.TextBoxFor(model => model.UrlToGetSitemap)

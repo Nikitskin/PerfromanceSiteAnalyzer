@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using BusinessLayer.Analyzer;
 using BusinessLayer.Interfaces;
-using DataLayer;
 using Microsoft.AspNetCore.Mvc;
 using SitemapPerormanceAnalyzer.Models;
 using System.Threading.Tasks;
@@ -26,20 +24,23 @@ namespace SitemapPerormanceAnalyzer.Controllers
             return View();
         }
 
-        public async Task<IActionResult> PerformanceResult(RequestModel model, int page = 1)
+        public RedirectToActionResult RedirectToPerformanceResult(RequestModel model)
         {
-            var amount = 10;
             var listOfUrls = _analyzer.ReturnSiteMap(model.UrlToGetSitemap);
-            ViewBag.ListOfUrls = listOfUrls;
-            PageViewModel pageViewModel = new PageViewModel(listOfUrls.Count, page, amount);
-            var result = await _performanceDiagostics.AsyncGetPerformanceModelInRange((page-1)*amount, amount);
-            var viewModel = new IndexViewModel
-            {
-                PageViewModel = pageViewModel,
-                PerformanceModels = result
-            };
+            return RedirectToAction("PerformanceResult", "Home", new { pageSize = model.PageSize });
+        }
+
+        public async Task<IActionResult> PerformanceResult(int page = 1, int pageSize = 10)
+        {
+            var result = await _performanceDiagostics.AsyncGetPerformanceModelInRange((page-1)* pageSize, pageSize);
+            ViewBag.ResultsAmount = _performanceDiagostics.GetTotalAmountOfSitemaps();
             ViewBag.SitemapPerformanceResults = result;
-            return View(viewModel);
+
+            return View(new IndexViewModel
+            {
+                PageViewModel = new PageViewModel(_performanceDiagostics.GetTotalAmountOfSitemaps(), page, pageSize),
+                PerformanceModels = result
+            });
         }
 
         public IActionResult Error()

@@ -5,18 +5,18 @@
 }
 
 <h2>PerformanceResult</h2>
-@Html.ActionLink("Back to search page", "Index", "Home");
+@Html.ActionLink("Back to search page", "Index", "Home")
 <br />
 @if (ViewBag.SitemapPerformanceResults != null)
 {
-    <p>Total amount of sitemap elements =  @ViewBag.ListOfUrls.Count</p>
+    <p>Total amount of sitemap elements =  @ViewBag.ResultsAmount</p>
     <br/>
     <table>
         <tr>
             <td>URL</td>
             <td>Miliseconds</td>
         </tr>
-        @foreach (var performanceResult in ViewBag.SitemapPerformanceResults)
+        @foreach (var performanceResult in Model.PerformanceModels)
         {
             <tr>
                 <td>@performanceResult.Url</td>
@@ -31,8 +31,9 @@
 
 @if (Model.PageViewModel.HasPreviousPage)
 {
-    <a asp-action="Index"
+    <a asp-action="PerformanceResult"
        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       asp-route-pageSize="@(Model.PageViewModel.PageSize)"
        class="btn btn-default btn">
         <i class="glyphicon glyphicon-chevron-left"></i>
         Previous
@@ -40,8 +41,9 @@
 }
 @if (Model.PageViewModel.HasNextPage)
 {
-    <a asp-action="Index"
+    <a asp-action="PerformanceResult"
        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       asp-route-pageSize="@(Model.PageViewModel.PageSize)"
        class="btn btn-default btn">
         Next
         <i class="glyphicon glyphicon-chevron-right"></i>
