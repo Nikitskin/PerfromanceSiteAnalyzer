@@ -5,22 +5,24 @@
     ViewBag.Title = "Performance testing page";
     @model SitemapPerormanceAnalyzer.Models.RequestModel
 }
-<h2>Index</h2>
+<h2>Hello, friend, this is sitemap analyzer</h2>
 <body>
-    @using (Html.BeginForm("RedirectToPerformanceResult", "Home", FormMethod.Post))
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
     {
         <div>Input url value to find sitemap</div>
         @Html.TextBoxFor(model => model.UrlToGetSitemap)
+        @Html.ValidationMessageFor(model => model.UrlToGetSitemap, "", new {@class= "text-danger" })
         <br />
         @Html.DropDownListFor(model => model.PageSize, new List<SelectListItem>
-    {
-        new SelectListItem{Text = "10", Value = "10"},
-        new SelectListItem{Text = "20", Value = "20"},
-        new SelectListItem{Text = "30", Value = "30"}
-    })
+        {
+            new SelectListItem{Text = "10", Value = "10"},
+            new SelectListItem{Text = "20", Value = "20"},
+            new SelectListItem{Text = "30", Value = "30"}
+        })
+        <br />
         <button type="submit">TestPerformance</button>
     }
     <br />
-   
+
 </body>
 </html>

@@ -24,9 +24,11 @@ namespace SitemapPerormanceAnalyzer.Controllers
             return View();
         }
 
-        public RedirectToActionResult RedirectToPerformanceResult(RequestModel model)
+        [HttpPost]
+        public IActionResult Index(RequestModel model)
         {
-            var listOfUrls = _analyzer.ReturnSiteMap(model.UrlToGetSitemap);
+            if (!ModelState.IsValid) return View(model);
+            _analyzer.ReturnSiteMap(model.UrlToGetSitemap);
             return RedirectToAction("PerformanceResult", "Home", new { pageSize = model.PageSize });
         }
 

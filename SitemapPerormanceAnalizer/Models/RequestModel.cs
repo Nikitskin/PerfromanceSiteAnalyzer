@@ -4,9 +4,10 @@ namespace SitemapPerormanceAnalyzer.Models
 {
     public class RequestModel
     {
-        [Required]
-        public string UrlToGetSitemap { get; set; }
+        [Required(ErrorMessage = "Url should be set")]
+        [RegularExpression(@"^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$", ErrorMessage = "Invalid url inputed")]
+        public virtual string UrlToGetSitemap { get; set; }
 
-        public string PageSize { get; set; }
+        public virtual string PageSize { get; set; }
     }
 }

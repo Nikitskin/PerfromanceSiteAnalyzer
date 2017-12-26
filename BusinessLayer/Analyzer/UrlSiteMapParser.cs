@@ -3,7 +3,6 @@ using System.Xml;
 using System.Xml.XPath;
 using BusinessLayer.Interfaces;
 using DataLayer;
-using System.Linq;
 using DataLayer.Models;
 using System;
 using System.Text.RegularExpressions;
@@ -13,7 +12,7 @@ namespace BusinessLayer.Analyzer
     public class UrlSiteMapParser : IAnalyzer
     {
         private const string DEFAULT = "DEFAULT";
-        private const string RegExp = @"/^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/";
+        private const string RegExp = @"^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$";
 
         public List<string> ReturnSiteMap(string url)
         {
@@ -22,9 +21,9 @@ namespace BusinessLayer.Analyzer
             Store.PerformanceResultDataModels.Clear();
             var result = Store.PerformanceResultDataModels;
             var siteUrl = Regex.Match(url, RegExp);
-            if (string.IsNullOrEmpty(url) || siteUrl.Success) return urls;
+            if (string.IsNullOrEmpty(url) || !siteUrl.Success) return urls;
             
-            var xmlReader = new XmlTextReader(string.Format("{0}sitemap.xml", siteUrl));
+            var xmlReader = new XmlTextReader(string.Format("{0}/sitemap.xml", siteUrl.Value));
             var document = new XPathDocument(xmlReader);
             var xNav = document.CreateNavigator();
             var xmlNamespaceManager = getNamespaces(xmlReader, xNav);
