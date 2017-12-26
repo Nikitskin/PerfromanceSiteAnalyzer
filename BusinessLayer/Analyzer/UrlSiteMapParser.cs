@@ -6,42 +6,42 @@ using DataLayer;
 using System.Linq;
 using DataLayer.Models;
 using System;
+using System.Text.RegularExpressions;
 
 namespace BusinessLayer.Analyzer
 {
     public class UrlSiteMapParser : IAnalyzer
     {
         private const string DEFAULT = "DEFAULT";
+        private const string RegExp = @"/^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/";
 
         public List<string> ReturnSiteMap(string url)
         {
-            List<string> urls = new List<string>();
+            var urls = new List<string>();
             //todo KISS not implemented
             Store.PerformanceResultDataModels.Clear();
             var result = Store.PerformanceResultDataModels;
-            if (!string.IsNullOrEmpty(url))
+            if (string.IsNullOrEmpty(url)) return urls;
+            var siteUrl = Regex.Match(url, RegExp);
+            var xmlReader = new XmlTextReader(string.Format("{0}sitemap.xml", siteUrl));
+            var document = new XPathDocument(xmlReader);
+            var xNav = document.CreateNavigator();
+            var xmlNamespaceManager = getNamespaces(xmlReader, xNav);
+
+            foreach (var namespc in xmlNamespaceManager)
             {
+                var iterator = xNav.Select(string.Format("//{0}:loc",
+                    string.IsNullOrEmpty(namespc.ToString()) ? DEFAULT : namespc), xmlNamespaceManager);
 
-                XmlReader xmlReader = new XmlTextReader(string.Format("{0}sitemap.xml", url));
-                XPathDocument document = new XPathDocument(xmlReader);
-                XPathNavigator xNav = document.CreateNavigator();
-                XmlNamespaceManager xmlNamespaceManager = getNamespaces(xmlReader, xNav);
-
-                foreach (var namespc in xmlNamespaceManager)
+                foreach (XPathNavigator node in iterator)
                 {
-                    XPathNodeIterator iterator = xNav.Select(string.Format("//{0}:loc",
-                        string.IsNullOrEmpty(namespc.ToString()) ? DEFAULT : namespc), xmlNamespaceManager);
-
-                    foreach (XPathNavigator node in iterator)
+                    urls.Add(node.Value);
+                    //todo add DI
+                    result.Add(new PerformanceResultDataModel
                     {
-                        urls.Add(node.Value);
-                        //todo add DI
-                        result.Add(new PerformanceResultDataModel
-                        {
-                            Url = node.Value,
-                            ResponseTime = TimeSpan.Zero
-                        });
-                    }
+                        Url = node.Value,
+                        ResponseTime = TimeSpan.Zero
+                    });
                 }
             }
             return urls;

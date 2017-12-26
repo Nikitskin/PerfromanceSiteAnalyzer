@@ -19,7 +19,6 @@ namespace DataLayer
                 }
                 return _performanceResultDataModels;
             }
-            private set { }
         }
     
     }
