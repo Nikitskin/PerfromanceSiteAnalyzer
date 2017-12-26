@@ -21,8 +21,9 @@ namespace BusinessLayer.Analyzer
             //todo KISS not implemented
             Store.PerformanceResultDataModels.Clear();
             var result = Store.PerformanceResultDataModels;
-            if (string.IsNullOrEmpty(url)) return urls;
             var siteUrl = Regex.Match(url, RegExp);
+            if (string.IsNullOrEmpty(url) || siteUrl.Success) return urls;
+            
             var xmlReader = new XmlTextReader(string.Format("{0}sitemap.xml", siteUrl));
             var document = new XPathDocument(xmlReader);
             var xNav = document.CreateNavigator();
