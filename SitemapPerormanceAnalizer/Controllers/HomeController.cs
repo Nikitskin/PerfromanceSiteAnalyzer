@@ -28,7 +28,7 @@ namespace SitemapPerormanceAnalyzer.Controllers
         public IActionResult Index(RequestModel model)
         {
             if (!ModelState.IsValid) return View(model);
-            _analyzer.ReturnSiteMap(model.UrlToGetSitemap);
+            _analyzer.GetSitemap(model.UrlToGetSitemap);
             return RedirectToAction("PerformanceResult", "Home", new { pageSize = model.PageSize });
         }
 

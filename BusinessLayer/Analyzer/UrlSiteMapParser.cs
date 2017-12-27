@@ -5,7 +5,10 @@ using BusinessLayer.Interfaces;
 using DataLayer;
 using DataLayer.Models;
 using System;
+using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Analyzer
 {
@@ -14,9 +17,32 @@ namespace BusinessLayer.Analyzer
         private const string DEFAULT = "DEFAULT";
         private const string RegExp = @"^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$";
 
+        public List<string> GetSitemap(string url)
+        {
+            var client = new HttpClient();
+            var resultTask = Task.Run(async () =>
+            {
+                var getResponseMessage = await client.GetAsync($"{url}/sitemap.xml");
+                var content = await getResponseMessage.Content.ReadAsStringAsync();
+                return Regex.Matches(content, RegExp).Select(value => value.Value).ToList();
+            });
+
+            resultTask.Wait();
+            
+            //todo make something different
+            foreach (var value in resultTask.Result)
+            {
+                Store.PerformanceResultDataModels.Add(new PerformanceResultDataModel
+                {
+                    Url = value
+                });
+            }
+            return resultTask.Result;
+        }
+
         public List<string> ReturnSiteMap(string url)
         {
-            var tree= new HashSet<string>();
+            
             var urls = new List<string>();
             //todo KISS not implemented
             Store.PerformanceResultDataModels.Clear();
