@@ -16,6 +16,7 @@ namespace BusinessLayer.Analyzer
 
         public List<string> ReturnSiteMap(string url)
         {
+            var tree= new HashSet<string>();
             var urls = new List<string>();
             //todo KISS not implemented
             Store.PerformanceResultDataModels.Clear();
@@ -30,8 +31,9 @@ namespace BusinessLayer.Analyzer
 
             foreach (var namespc in xmlNamespaceManager)
             {
+                if(string.IsNullOrEmpty(namespc.ToString())) continue;
                 var iterator = xNav.Select(string.Format("//{0}:loc",
-                    string.IsNullOrEmpty(namespc.ToString()) ? DEFAULT : namespc), xmlNamespaceManager);
+                    namespc), xmlNamespaceManager);
 
                 foreach (XPathNavigator node in iterator)
                 {
@@ -49,7 +51,7 @@ namespace BusinessLayer.Analyzer
 
         private XmlNamespaceManager getNamespaces(XmlReader xmlReader, XPathNavigator xNav)
         {
-            XmlNamespaceManager resolver = new XmlNamespaceManager(xmlReader.NameTable);
+            var resolver = new XmlNamespaceManager(xmlReader.NameTable);
 
             IDictionary<string, string> localNamespaces = null;
             while (xNav.MoveToFollowing(XPathNodeType.Element))
@@ -58,7 +60,7 @@ namespace BusinessLayer.Analyzer
                 foreach (var localNamespace in localNamespaces)
                 {
                     resolver.RemoveNamespace(localNamespace.Key, localNamespace.Value);
-                    string prefix = string.IsNullOrEmpty(localNamespace.Key) ? DEFAULT : localNamespace.Key;
+                    var prefix = string.IsNullOrEmpty(localNamespace.Key) ? DEFAULT : localNamespace.Key;
                     resolver.AddNamespace(prefix, localNamespace.Value);
                 }
             }
