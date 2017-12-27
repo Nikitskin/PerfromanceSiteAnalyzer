@@ -28,13 +28,16 @@ namespace BusinessLayer.Analyzer
         public async Task<IEnumerable<PerformanceModel>> AsyncGetPerformanceModelInRange(int from, int howMany)
         {
             var list = new List<PerformanceModel>();
-            for (int i = from; i < from + howMany; i++)
+            for (var i = from; (i < from + howMany) && (i < Store.PerformanceResultDataModels.Count); i++)
             {
-                //todo DI
-                var url = Store.PerformanceResultDataModels.ToArray()[i];
-                var resultTime = await GetCallBackTime(url.Url);
-                url.ResponseTime = resultTime;
-                list.Add(Mapper.Map<PerformanceResultDataModel, PerformanceModel>(url));
+                await Task.Factory.StartNew(() =>
+                 {
+                     var url = Store.PerformanceResultDataModels.ToArray()[i];
+                     //todo DI
+                     var resultTime = GetCallBackTime(url.Url).GetAwaiter().GetResult();
+                     url.ResponseTime = resultTime;
+                     list.Add(Mapper.Map<PerformanceResultDataModel, PerformanceModel>(url));
+                 }, TaskCreationOptions.AttachedToParent);
             }
             return list;
         }

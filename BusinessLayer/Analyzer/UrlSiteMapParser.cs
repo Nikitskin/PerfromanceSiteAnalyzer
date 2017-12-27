@@ -19,6 +19,7 @@ namespace BusinessLayer.Analyzer
 
         public async Task SetupSitemapUrls(string url)
         {
+            Store.PerformanceResultDataModels.Clear();
             var client = new HttpClient();
             var getResponseMessage = await client.GetAsync($"{url}/sitemap.xml");
             var content = await getResponseMessage.Content.ReadAsStringAsync();
@@ -36,7 +37,6 @@ namespace BusinessLayer.Analyzer
         {
             var urls = new List<string>();
             //todo KISS not implemented
-            Store.PerformanceResultDataModels.Clear();
             var result = Store.PerformanceResultDataModels;
             var siteUrl = Regex.Match(url, RegExp);
             if (string.IsNullOrEmpty(url) || !siteUrl.Success) return urls;
