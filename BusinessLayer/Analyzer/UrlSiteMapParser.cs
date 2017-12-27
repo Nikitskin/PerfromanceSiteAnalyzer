@@ -15,41 +15,32 @@ namespace BusinessLayer.Analyzer
     public class UrlSiteMapParser : IAnalyzer
     {
         private const string DEFAULT = "DEFAULT";
-        private const string RegExp = @"^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$";
+        private const string RegExp = @"(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/.*)(<\/loc>)";
 
-        public List<string> GetSitemap(string url)
+        public async Task SetupSitemapUrls(string url)
         {
             var client = new HttpClient();
-            var resultTask = Task.Run(async () =>
-            {
-                var getResponseMessage = await client.GetAsync($"{url}/sitemap.xml");
-                var content = await getResponseMessage.Content.ReadAsStringAsync();
-                return Regex.Matches(content, RegExp).Select(value => value.Value).ToList();
-            });
-
-            resultTask.Wait();
-            
-            //todo make something different
-            foreach (var value in resultTask.Result)
-            {
-                Store.PerformanceResultDataModels.Add(new PerformanceResultDataModel
+            var getResponseMessage = await client.GetAsync($"{url}/sitemap.xml");
+            var content = await getResponseMessage.Content.ReadAsStringAsync();
+            var list = Regex.Matches(content, RegExp).Select(regexMatch => 
+                new PerformanceResultDataModel
                 {
-                    Url = value
-                });
-            }
-            return resultTask.Result;
+                    Url = regexMatch.Value.Replace("</loc>",string.Empty)
+                }).ToList();
+
+            //todo make something different
+            Store.PerformanceResultDataModels.AddRange(list);
         }
 
         public List<string> ReturnSiteMap(string url)
         {
-            
             var urls = new List<string>();
             //todo KISS not implemented
             Store.PerformanceResultDataModels.Clear();
             var result = Store.PerformanceResultDataModels;
             var siteUrl = Regex.Match(url, RegExp);
             if (string.IsNullOrEmpty(url) || !siteUrl.Success) return urls;
-            
+
             var xmlReader = new XmlTextReader(string.Format("{0}/sitemap.xml", siteUrl.Value));
             var document = new XPathDocument(xmlReader);
             var xNav = document.CreateNavigator();
@@ -57,7 +48,7 @@ namespace BusinessLayer.Analyzer
 
             foreach (var namespc in xmlNamespaceManager)
             {
-                if(string.IsNullOrEmpty(namespc.ToString())) continue;
+                if (string.IsNullOrEmpty(namespc.ToString())) continue;
                 var iterator = xNav.Select(string.Format("//{0}:loc",
                     namespc), xmlNamespaceManager);
 

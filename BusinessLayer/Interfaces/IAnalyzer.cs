@@ -8,6 +8,6 @@ namespace BusinessLayer.Interfaces
     {
         List<string> ReturnSiteMap(string url);
 
-        List<string> GetSitemap(string url);
+        Task SetupSitemapUrls(string url);
     }
 }

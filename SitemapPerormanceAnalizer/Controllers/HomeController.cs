@@ -25,10 +25,10 @@ namespace SitemapPerormanceAnalyzer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(RequestModel model)
+        public async Task<IActionResult> Index(RequestModel model)
         {
             if (!ModelState.IsValid) return View(model);
-            _analyzer.GetSitemap(model.UrlToGetSitemap);
+            await _analyzer.SetupSitemapUrls(model.UrlToGetSitemap);
             return RedirectToAction("PerformanceResult", "Home", new { pageSize = model.PageSize });
         }
 
