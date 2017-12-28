@@ -1,5 +1,5 @@
 ﻿export class PerformanceResponseModel {
     constructor(
         public url: string,
-        public responseTime:string){}
+        public responseTime?:string){}
 }

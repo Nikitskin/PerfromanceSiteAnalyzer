@@ -8,6 +8,7 @@ namespace BusinessLayer.Interfaces
     public interface IPerformanceDiagostics
     {
         int GetTotalAmountOfSitemaps();
+        Task<IEnumerable<PerformanceModel>> AsyncGetPerformanceModelInRange();
         Task<IEnumerable<PerformanceModel>> AsyncGetPerformanceModelInRange(int min, int max);
         Task<TimeSpan> GetCallBackTime(string url);
     }

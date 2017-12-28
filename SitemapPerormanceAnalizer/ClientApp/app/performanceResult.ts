@@ -3,6 +3,10 @@ import { HttpClient} from '@angular/common/http';
 import { PerformanceResponseModel } from './performanceResponseModel';
 
 @Injectable()
-export class ResponseResult {
+export class PerformanceResult {
+
+    public getResponseModels(url : string ) : PerformanceResponseModel {
+        return undefined;
+    }
     
 }

@@ -25,6 +25,11 @@ namespace BusinessLayer.Analyzer
             return Store.PerformanceResultDataModels.Count; 
         }
 
+        public async Task<IEnumerable<PerformanceModel>> AsyncGetPerformanceModelInRange()
+        {
+            return await AsyncGetPerformanceModelInRange(0, int.MaxValue);
+        }
+
         public async Task<IEnumerable<PerformanceModel>> AsyncGetPerformanceModelInRange(int from, int howMany)
         {
             var list = new List<PerformanceModel>();
