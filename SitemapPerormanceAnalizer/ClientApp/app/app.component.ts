@@ -4,24 +4,30 @@ import { PerformanceResponseModel } from './performanceResponseModel';
 
 @Component({
     selector: 'app',
-    templateUrl: './app.component.html',
     providers: [PerformanceResult]
 })
 
 export class AppComponent implements OnInit {
  
-    products: PerformanceResponseModel[];                
+    performanceResultModels: PerformanceResponseModel[];                
     tableMode: boolean = true;          
  
-    constructor(private dataService: PerformanceResponseModel) { }
+    constructor(private provider: PerformanceResult) { }
  
      ngOnInit() {
-       /*  this.loadProducts();     */
+         
      }
-     /*loadProducts() {
-         this.dataService.getProducts()
-             .subscribe((data: Product[]) => this.products = data);
-     }*/
+
+     loadResults(url: string) {
+         this.provider.getResponseModels(url).
+             subscribe((data: PerformanceResponseModel[]) => this.performanceResultModels = data);
+     }
+
+    getResponseModels(url: string) {
+        return this.provider.getResponseModels(url);
+    }
+
+ 
     
  
 }

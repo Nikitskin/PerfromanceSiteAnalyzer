@@ -5,8 +5,12 @@ import { PerformanceResponseModel } from './performanceResponseModel';
 @Injectable()
 export class PerformanceResult {
 
-    public getResponseModels(url : string ) : PerformanceResponseModel {
-        return undefined;
+    private url = "/api/SitemapAnalyze";
+
+    constructor(private http: HttpClient) {
     }
-    
+
+    getResponseModels(url : string ) {
+        return this.http.post(this.url, url);
+    }
 }

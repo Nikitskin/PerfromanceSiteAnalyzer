@@ -9,24 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { PerformanceResult } from './performanceResult';
-import { PerformanceResponseModel } from './performanceResponseModel';
 var AppComponent = (function () {
-    function AppComponent(dataService) {
-        this.dataService = dataService;
+    function AppComponent(provider) {
+        this.provider = provider;
         this.tableMode = true;
     }
     AppComponent.prototype.ngOnInit = function () {
-        /*  this.loadProducts();     */
+    };
+    AppComponent.prototype.loadResults = function (url) {
+        var _this = this;
+        this.provider.getResponseModels(url).
+            subscribe(function (data) { return _this.performanceResultModels = data; });
+    };
+    AppComponent.prototype.getResponseModels = function (url) {
+        return this.provider.getResponseModels(url);
     };
     return AppComponent;
 }());
 AppComponent = __decorate([
     Component({
         selector: 'app',
-        templateUrl: './app.component.html',
         providers: [PerformanceResult]
     }),
-    __metadata("design:paramtypes", [PerformanceResponseModel])
+    __metadata("design:paramtypes", [PerformanceResult])
 ], AppComponent);
 export { AppComponent };
 //# sourceMappingURL=app.component.js.map

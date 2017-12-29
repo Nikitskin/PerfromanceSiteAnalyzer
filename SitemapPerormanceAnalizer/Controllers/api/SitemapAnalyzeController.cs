@@ -21,10 +21,10 @@ namespace SitemapPerormanceAnalyzer.Controllers.api
             _performanceDiagostics = new PerformanceDiagnostics();
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<PerformanceModel>> Get(string UrlToGetSitemap)
+        [HttpPost]
+        public async Task<IEnumerable<PerformanceModel>> Get(string urlToGetSitemap)
         {
-            await _analyzer.SetupSitemapUrls(UrlToGetSitemap);
+            await _analyzer.SetupSitemapUrls(urlToGetSitemap);
             var result = await _performanceDiagostics.AsyncGetPerformanceModelInRange();
             ViewBag.ResultsAmount = _performanceDiagostics.GetTotalAmountOfSitemaps();
             ViewBag.SitemapPerformanceResults = result;
