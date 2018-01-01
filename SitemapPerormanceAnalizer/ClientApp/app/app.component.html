@@ -1,0 +1,22 @@
+﻿<h3>Urls to response time table</h3>
+<input type="text" class="form-control" />
+<br />
+<button class="btn btn-sm btn-primary" (click)="getResponseModels('http://google.com.ua')">Get reponse time for sitemap" </button>
+<table  class="table table-striped">
+    <thead>
+        <tr>
+            <td>Url from sitemap</td>
+            <td>Response time</td>
+        </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of responses">
+    <!--<tr *ngIf="tableMode; else hello" *ngFor="let item of responses">-->
+        <td>{{item}}</td>
+        <!--<td>{{r?.responseTime}}</td>-->
+    </tr>
+    </tbody>
+</table>
+<ng-template #hello>
+    <label>Hello string</label>
+</ng-template>

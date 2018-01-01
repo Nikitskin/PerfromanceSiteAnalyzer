@@ -1,6 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { PerformanceResponseModel } from './performanceResponseModel';
 
 @Injectable()
 export class PerformanceResult {
@@ -10,7 +9,7 @@ export class PerformanceResult {
     constructor(private http: HttpClient) {
     }
 
-    getResponseModels(url : string ) {
-        return this.http.post(this.url, url);
+    getResponseModels(urlToTest : string ) {
+        return this.http.post(this.url, urlToTest );
     }
 }

@@ -22,7 +22,7 @@ namespace SitemapPerormanceAnalyzer.Controllers.api
         }
 
         [HttpPost]
-        public async Task<IEnumerable<PerformanceModel>> Get(string urlToGetSitemap)
+        public async Task<IEnumerable<PerformanceModel>> Post(string urlToGetSitemap)
         {
             await _analyzer.SetupSitemapUrls(urlToGetSitemap);
             var result = await _performanceDiagostics.AsyncGetPerformanceModelInRange();

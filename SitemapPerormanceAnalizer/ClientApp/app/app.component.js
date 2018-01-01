@@ -4,34 +4,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 import { Component } from '@angular/core';
-import { PerformanceResult } from './performanceResult';
 var AppComponent = (function () {
-    function AppComponent(provider) {
-        this.provider = provider;
-        this.tableMode = true;
+    function AppComponent() {
+        this.items = ["Apple iPhone 7", "Huawei Mate 9", "Samsung Galaxy S7", "Motorola Moto Z"];
+        //public responses: PerformanceResponseModel[] = [new PerformanceResponseModel("sadasd","fsafasf")];                
+        this.tableMode = false;
     }
-    AppComponent.prototype.ngOnInit = function () {
-    };
-    AppComponent.prototype.loadResults = function (url) {
-        var _this = this;
-        this.provider.getResponseModels(url).
-            subscribe(function (data) { return _this.performanceResultModels = data; });
-    };
+    //constructor(private provider: PerformanceResult) { }
     AppComponent.prototype.getResponseModels = function (url) {
-        return this.provider.getResponseModels(url);
+        //this.provider.getResponseModels(url).
+        //    subscribe((data: PerformanceResponseModel[]) => this.responses = data);
+        this.tableMode = true;
     };
     return AppComponent;
 }());
 AppComponent = __decorate([
     Component({
         selector: 'app',
-        providers: [PerformanceResult]
-    }),
-    __metadata("design:paramtypes", [PerformanceResult])
+        //templateUrl: './app.component.html',
+        template: "<ul>\n                  <li *ngFor=\"let item of items.result\">{{item}}</li>\n                </ul>",
+    })
 ], AppComponent);
 export { AppComponent };
 //# sourceMappingURL=app.component.js.map

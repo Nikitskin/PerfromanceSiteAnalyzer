@@ -1,30 +1,28 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { PerformanceResult } from './performanceResult';
 import { PerformanceResponseModel } from './performanceResponseModel';
 
 @Component({
     selector: 'app',
-    providers: [PerformanceResult]
+    //templateUrl: './app.component.html',
+    template: `<ul>
+                  <li *ngFor="let item of items.result">{{item}}</li>
+                </ul>`,
+    //providers: [PerformanceResult]
 })
 
-export class AppComponent implements OnInit {
- 
-    performanceResultModels: PerformanceResponseModel[];                
-    tableMode: boolean = true;          
- 
-    constructor(private provider: PerformanceResult) { }
- 
-     ngOnInit() {
-         
-     }
+export class AppComponent{
 
-     loadResults(url: string) {
-         this.provider.getResponseModels(url).
-             subscribe((data: PerformanceResponseModel[]) => this.performanceResultModels = data);
-     }
-
+    items = ["Apple iPhone 7", "Huawei Mate 9", "Samsung Galaxy S7", "Motorola Moto Z"];
+    //public responses: PerformanceResponseModel[] = [new PerformanceResponseModel("sadasd","fsafasf")];                
+    tableMode: boolean = false;          
+ 
+    //constructor(private provider: PerformanceResult) { }
+ 
     getResponseModels(url: string) {
-        return this.provider.getResponseModels(url);
+        //this.provider.getResponseModels(url).
+        //    subscribe((data: PerformanceResponseModel[]) => this.responses = data);
+        this.tableMode = true;
     }
 
  
