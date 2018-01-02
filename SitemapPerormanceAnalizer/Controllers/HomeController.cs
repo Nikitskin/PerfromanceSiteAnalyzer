@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using BusinessLayer.Analyzer;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using SitemapPerormanceAnalyzer.Models;
-using System.Threading.Tasks;
+using SitemapPerformanceAnalyzer.Models;
 
-namespace SitemapPerormanceAnalyzer.Controllers
+namespace SitemapPerformanceAnalyzer.Controllers
 {
     public class HomeController : Controller
     {

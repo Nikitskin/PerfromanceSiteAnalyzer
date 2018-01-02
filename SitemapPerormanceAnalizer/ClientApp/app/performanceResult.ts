@@ -9,7 +9,8 @@ export class PerformanceResult {
     constructor(private http: HttpClient) {
     }
 
-    getResponseModels(urlToTest : string ) {
-        return this.http.post(this.url, urlToTest );
+    getResponseModels(urlToTest: string) {
+        const body = { asfas: "fasfafa" };
+        return this.http.post(this.url, body);
     }
 }

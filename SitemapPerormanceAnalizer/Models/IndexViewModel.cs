@@ -1,8 +1,7 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BusinessLayer.Models;
 
-namespace SitemapPerormanceAnalyzer.Models
+namespace SitemapPerformanceAnalyzer.Models
 {
     public class IndexViewModel
     {

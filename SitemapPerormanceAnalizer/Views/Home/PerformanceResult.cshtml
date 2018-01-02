@@ -1,12 +1,13 @@
 ﻿@{
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    @model SitemapPerormanceAnalyzer.Models.IndexViewModel
+    @using SitemapPerformanceAnalyzer.Models
+@model SitemapPerformanceAnalyzer.Models.IndexViewModel
 }
 
 <h2>PerformanceResult</h2>
-@Html.ActionLink("Back to search page", "Index", "Home")
-<br />
+    @Html.ActionLink("Back to search page", "Index", "Home")
+    <br />
 @if (ViewBag.SitemapPerformanceResults != null)
 {
     <p>Total amount of sitemap elements =  @ViewBag.ResultsAmount</p>

@@ -1,4 +1,4 @@
-namespace SitemapPerormanceAnalyzer.Models
+namespace SitemapPerformanceAnalyzer.Models
 {
     public class ErrorViewModel
     {

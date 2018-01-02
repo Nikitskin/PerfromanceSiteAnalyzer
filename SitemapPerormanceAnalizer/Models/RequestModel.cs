@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SitemapPerormanceAnalyzer.Models
+namespace SitemapPerformanceAnalyzer.Models
 {
     public class RequestModel
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SitemapPerormanceAnalyzer.Models
+namespace SitemapPerformanceAnalyzer.Models
 {
     public class PageViewModel
     {

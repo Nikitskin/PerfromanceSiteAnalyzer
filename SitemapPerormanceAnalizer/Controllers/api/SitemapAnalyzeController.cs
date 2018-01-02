@@ -5,8 +5,7 @@ using BusinessLayer.Interfaces;
 using BusinessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 
-
-namespace SitemapPerormanceAnalyzer.Controllers.api
+namespace SitemapPerformanceAnalyzer.Controllers.api
 {
     [Route("api/[controller]")]
     public class SitemapAnalyzeController : Controller
@@ -22,7 +21,7 @@ namespace SitemapPerormanceAnalyzer.Controllers.api
         }
 
         [HttpPost]
-        public async Task<IEnumerable<PerformanceModel>> Post(string urlToGetSitemap)
+        public async Task<IEnumerable<PerformanceModel>> Post([FromBody]string urlToGetSitemap)
         {
             await _analyzer.SetupSitemapUrls(urlToGetSitemap);
             var result = await _performanceDiagostics.AsyncGetPerformanceModelInRange();
@@ -31,4 +30,5 @@ namespace SitemapPerormanceAnalyzer.Controllers.api
             return result;
         }
     }
+
 }

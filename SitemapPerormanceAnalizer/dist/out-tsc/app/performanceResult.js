@@ -17,7 +17,7 @@ var PerformanceResult = (function () {
         this.url = "/api/SitemapAnalyze";
     }
     PerformanceResult.prototype.getResponseModels = function (urlToTest) {
-        return this.http.post(this.url, urlToTest);
+        return this.http.post(this.url, "asasdasdasd");
     };
     return PerformanceResult;
 }());
