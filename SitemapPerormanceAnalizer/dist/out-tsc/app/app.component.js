@@ -10,20 +10,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var http_1 = require("@angular/common/http");
-var PerformanceResult = (function () {
-    function PerformanceResult(http) {
-        this.http = http;
-        this.url = "/api/SitemapAnalyze";
+var performanceResult_1 = require("./performanceResult");
+var AppComponent = (function () {
+    function AppComponent(provider) {
+        this.provider = provider;
+        this.tableMode = false;
     }
-    PerformanceResult.prototype.getResponseModels = function (urlToTest) {
-        return this.http.post(this.url, urlToTest);
+    AppComponent.prototype.getResponseModels = function () {
+        var _this = this;
+        this.provider.getResponseModels(this.url).
+            subscribe(function (data) { return _this.responses = data; });
+        this.tableMode = true;
     };
-    return PerformanceResult;
+    return AppComponent;
 }());
-PerformanceResult = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.HttpClient])
-], PerformanceResult);
-exports.PerformanceResult = PerformanceResult;
-//# sourceMappingURL=performanceResult.js.map
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'app',
+        templateUrl: './app.component.html',
+        providers: [performanceResult_1.PerformanceResult]
+    }),
+    __metadata("design:paramtypes", [performanceResult_1.PerformanceResult])
+], AppComponent);
+exports.AppComponent = AppComponent;
+//# sourceMappingURL=app.component.js.map
