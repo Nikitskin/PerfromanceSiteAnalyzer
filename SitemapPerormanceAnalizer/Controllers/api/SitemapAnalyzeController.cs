@@ -21,14 +21,18 @@ namespace SitemapPerformanceAnalyzer.Controllers.api
         }
 
         [HttpPost]
-        public async Task<IEnumerable<PerformanceModel>> Post([FromBody]string urlToGetSitemap)
+        public async Task<IEnumerable<PerformanceModel>> Post([FromBody]User urlToGetSitemap)
         {
-            await _analyzer.SetupSitemapUrls(urlToGetSitemap);
+            await _analyzer.SetupSitemapUrls(urlToGetSitemap.url);
             var result = await _performanceDiagostics.AsyncGetPerformanceModelInRange();
             ViewBag.ResultsAmount = _performanceDiagostics.GetTotalAmountOfSitemaps();
             ViewBag.SitemapPerformanceResults = result;
             return result;
         }
     }
-
+    public class User
+    {
+        public string url;
+    }
 }
+

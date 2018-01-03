@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var PerformanceResponseModel = (function () {
+var PerformanceResponseModel = /** @class */ (function () {
     function PerformanceResponseModel(url, responseTime) {
         this.url = url;
         this.responseTime = responseTime;

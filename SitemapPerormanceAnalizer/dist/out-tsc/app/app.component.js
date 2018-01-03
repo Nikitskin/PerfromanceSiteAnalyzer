@@ -11,26 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var performanceResult_1 = require("./performanceResult");
-var AppComponent = (function () {
+var AppComponent = /** @class */ (function () {
     function AppComponent(provider) {
         this.provider = provider;
         this.tableMode = false;
     }
-    AppComponent.prototype.getResponseModels = function () {
+    AppComponent.prototype.getResponseModels = function (requestModel) {
         var _this = this;
-        this.provider.getResponseModels(this.url).
+        this.provider.getResponseModels(requestModel).
             subscribe(function (data) { return _this.responses = data; });
         this.tableMode = true;
     };
+    AppComponent = __decorate([
+        core_1.Component({
+            selector: 'app',
+            templateUrl: './app.component.html',
+            providers: [performanceResult_1.PerformanceResult]
+        }),
+        __metadata("design:paramtypes", [performanceResult_1.PerformanceResult])
+    ], AppComponent);
     return AppComponent;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'app',
-        templateUrl: './app.component.html',
-        providers: [performanceResult_1.PerformanceResult]
-    }),
-    __metadata("design:paramtypes", [performanceResult_1.PerformanceResult])
-], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

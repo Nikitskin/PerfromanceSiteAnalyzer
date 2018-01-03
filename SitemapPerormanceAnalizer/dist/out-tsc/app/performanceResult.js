@@ -11,19 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
-var PerformanceResult = (function () {
+var PerformanceResult = /** @class */ (function () {
     function PerformanceResult(http) {
         this.http = http;
         this.url = "/api/SitemapAnalyze";
     }
-    PerformanceResult.prototype.getResponseModels = function (urlToTest) {
-        return this.http.post(this.url, "asasdasdasd");
+    PerformanceResult.prototype.getResponseModels = function (requestModel) {
+        return this.http.post(this.url, requestModel.url);
     };
+    PerformanceResult = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient])
+    ], PerformanceResult);
     return PerformanceResult;
 }());
-PerformanceResult = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.HttpClient])
-], PerformanceResult);
 exports.PerformanceResult = PerformanceResult;
 //# sourceMappingURL=performanceResult.js.map

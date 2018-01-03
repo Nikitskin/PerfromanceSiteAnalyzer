@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { RequestModel } from './request.model';
 
 @Injectable()
 export class PerformanceResult {
@@ -9,8 +10,7 @@ export class PerformanceResult {
     constructor(private http: HttpClient) {
     }
 
-    getResponseModels(urlToTest: string) {
-        const body = { asfas: "fasfafa" };
-        return this.http.post(this.url, body);
+    getResponseModels(requestModel: RequestModel) {
+        return this.http.post(this.url, requestModel.url);
     }
 }
